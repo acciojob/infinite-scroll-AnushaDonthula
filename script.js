@@ -1,31 +1,28 @@
 //your code here!
-const itemList = document.getElementById('item-list');
-const itemsToAdd = 10; // Number of initial items to add
-const additionalItems = 2; // Number of items to add on scroll
+document.addEventListener('DOMContentLoaded', () => {
+    const itemList = document.getElementById('itemList');
 
-// Function to create a list item
-function createListItem(content) {
-    const li = document.createElement('li');
-    li.textContent = content;
-    return li;
-}
-
-// Function to add items to the list
-function addItems(count) {
-    for (let i = 0; i < count; i++) {
-        const itemNumber = itemList.children.length + 1;
-        const newItem = createListItem(`Item ${itemNumber}`);
-        itemList.appendChild(newItem);
+    function addItems(count) {
+        for (let i = 0; i < count; i++) {
+            const li = document.createElement('li');
+            li.textContent = `Item ${itemList.children.length + 1}`;
+            itemList.appendChild(li);
+        }
     }
-}
 
-// Initial items
-addItems(itemsToAdd);
+    function onScroll() {
+        const scrollTop = window.scrollY || window.pageYOffset;
+        const windowHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
 
-// Scroll event listener
-window.addEventListener('scroll', () => {
-    // Check if user has scrolled to the bottom
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        addItems(additionalItems);
+        if (scrollTop + windowHeight >= docHeight - 10) {
+            addItems(2); // Add 2 items when reaching near the bottom
+        }
     }
+
+    // Initial items
+    addItems(10);
+
+    // Event listener for scrolling
+    window.addEventListener('scroll', onScroll);
 });
