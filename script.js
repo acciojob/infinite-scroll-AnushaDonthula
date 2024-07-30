@@ -1,28 +1,44 @@
 //your code here!
-document.addEventListener('DOMContentLoaded', () => {
-    const itemList = document.getElementById('itemList');
+const itemList = document.getElementById('item-list');
+const loading = document.getElementById('loading');
+const initialItems = 10; // Number of items to load initially
+const additionalItems = 2; // Number of items to load on scroll
 
-    function addItems(count) {
-        for (let i = 0; i < count; i++) {
-            const li = document.createElement('li');
-            li.textContent = `Item ${itemList.children.length + 1}`;
-            itemList.appendChild(li);
-        }
+// Function to create a list item
+function createListItem(content) {
+    const li = document.createElement('li');
+    li.textContent = content;
+    return li;
+}
+
+// Function to add items to the list
+function addItems(count) {
+    for (let i = 0; i < count; i++) {
+        const itemNumber = itemList.children.length + 1;
+        const newItem = createListItem(`Item ${itemNumber}`);
+        itemList.appendChild(newItem);
     }
+}
 
-    function onScroll() {
-        const scrollTop = window.scrollY || window.pageYOffset;
-        const windowHeight = window.innerHeight;
-        const docHeight = document.documentElement.scrollHeight;
+// Initial items
+addItems(initialItems);
 
-        if (scrollTop + windowHeight >= docHeight - 10) {
-            addItems(2); // Add 2 items when reaching near the bottom
-        }
+// Function to check if scrolled to bottom
+function isScrolledToBottom() {
+    return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
+}
+
+// Scroll event listener
+window.addEventListener('scroll', () => {
+    if (isScrolledToBottom()) {
+        // Show loading message
+        loading.style.display = 'block';
+        
+        // Add more items
+        setTimeout(() => {
+            addItems(additionalItems);
+            // Hide loading message
+            loading.style.display = 'none';
+        }, 500); // Simulate network delay
     }
-
-    // Initial items
-    addItems(10);
-
-    // Event listener for scrolling
-    window.addEventListener('scroll', onScroll);
 });
