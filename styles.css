@@ -11,6 +11,9 @@ li {
   padding: 10px;
   list-style-type: none;
 }
+#loading {
+  display: none;
+}
 li:hover {
   background: #ccc;
 }

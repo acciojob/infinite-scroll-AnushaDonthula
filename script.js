@@ -1,5 +1,5 @@
 //your code here!
-const itemList = document.getElementById('item-list');
+const itemList = document.getElementById('infi-list');
 const loading = document.getElementById('loading');
 const initialItems = 10; // Number of items to load initially
 const additionalItems = 2; // Number of items to load on scroll
